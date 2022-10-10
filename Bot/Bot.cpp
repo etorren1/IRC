@@ -124,6 +124,8 @@ Bot::Bot( std::string const & host, std::string const & port, std::string const 
 	pingTime = 0;
 	srvPass = pass;
 	srvHost = host;
+	if (host == "localhost")
+		srvHost = "127.0.0.1";
 	motd = false;
 	nick = "termUI";
 	user = "andrev bot.21.school.ru ecole.42.fr :Andrev Bot";
