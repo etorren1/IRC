@@ -33,6 +33,9 @@ void Bot::processReply( void )
         case 331:
             sendMessage("TOPIC", " ", msg.midParams[1], " :Now this channel under Bot's control!");
             break ;
+		case 376:
+			motd = true;
+			break ;
     }
 }
 

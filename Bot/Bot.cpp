@@ -22,7 +22,7 @@ void Bot::create( void )
         perror("Connect failed");
         exit(EXIT_FAILURE);
     }
-	std::cout << GREEN << "Connect succes\n" << RESET;
+	std::cout << GREEN << "Connected\n" << RESET;
 }
 
 void Bot::registration( void )
@@ -43,7 +43,9 @@ void Bot::run( void )
 		}
 		spam();
 	}
-	reconnect();
+	if (motd)
+		reconnect();
+	std::cout << "exit\n";
 }
 
 void Bot::reconnect( void )
@@ -122,8 +124,9 @@ Bot::Bot( std::string const & host, std::string const & port, std::string const 
 	pingTime = 0;
 	srvPass = pass;
 	srvHost = host;
-	nick = "ircbot";
-	user = "user bot.21.school.ru ecole.42.fr :Andrev Bot";
+	motd = false;
+	nick = "termUI";
+	user = "andrev bot.21.school.ru ecole.42.fr :Andrev Bot";
 }
 
 Bot::~Bot() {

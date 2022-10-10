@@ -42,6 +42,7 @@ class Bot {
 		std::string					user;
 		std::vector<std::string> 	messages;
 		std::vector<std::string> 	channels;
+		bool						motd;
 
 		std::string 		srvPass;
 		std::string 		srvHost;
