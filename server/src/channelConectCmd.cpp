@@ -12,7 +12,7 @@ int Server::join( User & user )
     {
         if (*(channellist[i].begin()) != '#')
             return(errorMEss(ERR_NOSUCHCHANNEL, user, channellist[i]));
-        if (user.getChannelList().size() >= maxChannels)
+        if ((int)user.getChannelList().size() >= maxChannels)
             return(errorMEss(ERR_TOOMANYCHANNELS, user, channellist[i]));
         try // join to channel
         {

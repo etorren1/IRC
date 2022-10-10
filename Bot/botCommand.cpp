@@ -4,13 +4,12 @@ void Bot::execute( std::string & nick ) {
 	try    {
     	(this->*(commands.at(cmds)))();
 		while (reply.size())	{
-			sendMessage("PRIVMSG", nick, reply[0]);
-			std::cout << cmds << " " << reply[0].size() << std::endl;
+			sendMessage("PRIVMSG ", nick, " ", reply[0]);
 			reply.erase(reply.begin());
 		}
 	}
 	catch(const std::exception& e)		{
-		sendMessage("PRIVMSG", nick, ":Ilmira dont teach me execute that command. Sorry");
+		sendMessage("PRIVMSG ", nick, " :Ilmira dont teach me execute that command. Sorry");
 	}
 	cmds.clear();
 }
@@ -56,7 +55,7 @@ int Bot::help() {
 You need to complete the mandatory commands - \e[1mPASS\e[0m, \e[1mNICK\e[0m and \e[1mUSER\e[0m. You cann't starrt working in the server\
 until these commands are executed. Call one of the commands /PASS, /NICK or /USER to learn how to execute\
 these commands. If you want to see a lost of all commands enter  /COMMAND");
-	std::cout << reply[0].size() << std::endl;
+	//std::cout << reply[0].size() << std::endl;
 	return 0;
 }
 

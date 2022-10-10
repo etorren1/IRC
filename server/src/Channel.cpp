@@ -132,8 +132,8 @@ unsigned int Channel::getUserLimit( void ) const { return (userLimit); }
 
 int Channel::isInChannel(User &user)
 {
-	std::vector<User *>::iterator beginIt = this->getUserList().begin();
-	std::vector<User *>::iterator endIt = this->getUserList().end();
+	std::vector<User *>::iterator beginIt = users.begin();
+	std::vector<User *>::iterator endIt = users.end();
 	while (beginIt != endIt)
 	{
 		if (*beginIt++ == &user)

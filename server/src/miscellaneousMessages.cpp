@@ -22,7 +22,7 @@ int Server::ping( User & user) {
 }
 
 int Server::pong( User & user) {
-	if (msg.midParams.size() != 1)  
+	if (msg.midParams.size() != 1 && msg.trailing.empty())  
 		return errorMEss(ERR_NOORIGIN, user);
 	if (msg.midParams[0] != inf.serverName && msg.trailing != inf.serverName)
 		return errorMEss(ERR_NOSUCHSERVER, user);

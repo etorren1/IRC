@@ -1,6 +1,6 @@
 #include "Server.hpp"
 
-bool Server::validNick(User &user) {
+bool Server::validNick() {
 	std::string str = msg.midParams[0];
 	std::string::iterator it = str.begin();
 	if (!std::isalpha(*it))
@@ -60,14 +60,14 @@ int Server::user(User &user){
 
 int Server::nick(User &user) {
 	if (msg.midParams.size() == 1) {
-		for (int i = 0; i < userData.size(); ++i) {
+		for (size_t i = 0; i < userData.size(); ++i) {
 			if (userData[i]->getNick() == msg.midParams[0])
 				return errorMEss(ERR_NICKCOLLISION, user);
 		}
 		if (user.getNick() == msg.midParams[0]) {
 			return errorMEss(ERR_NICKNAMEINUSE, user);
 		}
-		else if (msg.midParams[0].size() > 9 || validNick(user) == false) {
+		else if (msg.midParams[0].size() > 9 || validNick() == false) {
 			return errorMEss(ERR_ERRONEUSNICKNAME, user);
 		}
 		else {
@@ -138,7 +138,7 @@ int Server::connection(User &user) {
 }
 
 bool Server::notRegistr(User &user) {
-	if (!(user.getFlags() & REGISTRED) && (msg.cmd != "USER" && msg.cmd != "PASS" && msg.cmd != "NICK")) {
+	if (!(user.getFlags() & REGISTRED) && (msg.cmd != "USER" && msg.cmd != "PASS" && msg.cmd != "NICK" && msg.cmd != "QUIT")) {
 		errorMEss(ERR_NOTREGISTERED, user);
 		return true;
 	}

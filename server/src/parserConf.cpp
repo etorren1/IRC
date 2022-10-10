@@ -11,16 +11,15 @@ static std::string extract_value(std::string str)
 int		Server::parseConf()
 {
 	std::vector<std::string> strs;
-	std::ifstream input(CONF_NAME);
+	std::ifstream input(CONF_PATH);
 	std::string tmp;
-	int i = 0;
 
 	if (input.is_open()) {
 		while(getline (input, tmp))
 			strs.push_back(tmp);
 	}
 	else {
-		std::cout << "Unable to open IRCconf.json file";
+		std::cout << "Unable to open IRCconf.json file\n";
 		return (1);
 	}
 

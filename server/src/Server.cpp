@@ -124,6 +124,13 @@ void Server::clientRequest( void ) {
     }
 }
 
+static std::string compMsg(std::vector<std::string> vec) {
+    std::string text = "";
+    for (size_t i = 0; i < vec.size(); i++)
+        text += vec[i] + "\n";
+    return text;
+}
+
 int  Server::readRequest( size_t const id )
 {
     char buf[BUF_SIZE + 1];
@@ -131,13 +138,11 @@ int  Server::readRequest( size_t const id )
     int rd;
     std::string text;
     if (userData[id]->messages.size() > 0)
-		text = userData[id]->messages.front();
-    while ((rd = recv(userFds[id].fd, buf, BUF_SIZE, 0)) > 0) {
+		text = compMsg(userData[id]->messages);
+    if ((rd = recv(userFds[id].fd, buf, BUF_SIZE, 0)) > 0) {
         buf[rd] = 0;
         bytesRead += rd;
         text += buf;
-        if (text.find("\n") != std::string::npos)
-            break;
     }
     while (text.find("\r") != std::string::npos)      // Удаляем символ возврата карретки
         text.erase(text.find("\r"), 1);               // из комбинации CRLF
@@ -149,7 +154,7 @@ int  Server::readRequest( size_t const id )
 }
 
 void Server::checkUserConnection() {
-    for (int i = 0; i < userData.size(); ++i) {
+    for (size_t i = 0; i < userData.size(); ++i) {
         if (userData[i]->getFlags() & REGISTRED) {
             if ((userData[i]->timeChecker() - userData[i]->getLastMessTime()) > inactveTime) {
                 std::string mess = ":" + inf.serverName + " PING :" + inf.serverName + "\n";
@@ -181,7 +186,6 @@ void Server::executeCommand( size_t const id ) {
     cleanMsgStruct();
 
     if (!parseMsg(id) && notRegistr(*userData[id]) == false) // autorization
-    // parseMsg(id) && notRegistr(*userData[id]) == false; // not autorize
 
     execute(msg.cmd, *userData[id]);
 

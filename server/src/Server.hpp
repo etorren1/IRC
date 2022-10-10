@@ -25,7 +25,7 @@
 #define WORKING 0b10
 #define RESTART 0b01
 #define BUF_SIZE 512
-#define CONF_NAME "IRCconf.json"
+#define CONF_PATH "conf/IRCconf.json"
 
 typedef struct s_msg
 {
@@ -79,7 +79,7 @@ class Server {
 
 		// parser
 		int			parseMsg(size_t id);
-		int			checkMsgFormat( std::string cmdStr , size_t id);
+		int			checkMsgFormat( size_t id);
 		void		cleanMsgStruct();
 		void		processWildcard();
 		void		printStuct();
@@ -128,7 +128,7 @@ class Server {
 		int			killUser( User & user );
     	int			connection( User & user );
 		bool		notRegistr( User & user );
-		bool 		validNick( User & user );
+		bool 		validNick( void );
 		bool		isChannel( std::string name );
 		int			errorMEss( int err, User &user, const std::string &str = "" );
 		int			replyMEss( int reply, User &user, const std::string &str = "" );

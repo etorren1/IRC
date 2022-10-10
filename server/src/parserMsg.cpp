@@ -69,13 +69,13 @@ int Server::parseMsg(size_t id)
 	//std::cout << "\n";
 
 	//check tokents validity
-	if (checkMsgFormat(cmdStr, id))
+	if (checkMsgFormat(id))
 		return(1);
 
 	return (0);
 }
 
-int Server::checkMsgFormat( std::string cmdStr , size_t id)
+int Server::checkMsgFormat( size_t id )
 {
 	std::string message;
 	//rfc1459 2.3 "the command, and the command parameters (of which there may be up to 15)"

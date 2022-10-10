@@ -1,15 +1,5 @@
 #include "Server.hpp"
 
-// + 411 ERR_NORECIPIENT
-// + 404 ERR_CANNOTSENDTOCHAN
-// + 401 ERR_NOSUCHNICK
-// + 301 RPL_AWAY
-// - 407 ERR_TOOMANYTARGETS
-
-// + 412 ERR_NOTEXTTOSEND
-// 413 ERR_NOTOPLEVEL
-// 414 ERR_WILDTOPLEVEL
-
 static int checkMask(std::string str)
 {
 	std::string::iterator strIt;

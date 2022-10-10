@@ -3,13 +3,15 @@
 
 static bool commonChannel(User & user1, User & user2)
 {
-	std::vector<std::string>::iterator itV1 (user1.getChannelList().begin());
-	std::vector<std::string>::iterator itEndV1 (user1.getChannelList().end());
-	std::vector<std::string>::iterator itEndV2 (user2.getChannelList().end());
+	std::vector<std::string> vec1 = user1.getChannelList();
+	std::vector<std::string> vec2 = user2.getChannelList();
+	std::vector<std::string>::iterator itV1 (vec1.begin());
+	std::vector<std::string>::iterator itEndV1 (vec1.end());
+	std::vector<std::string>::iterator itEndV2 (vec2.end());
 
 	while (itV1 != itEndV1)
 	{
-		std::vector<std::string>::iterator itV2 (user2.getChannelList().begin());
+		std::vector<std::string>::iterator itV2 (vec2.begin());
 		while (itV2 != itEndV2)
 		{
 			if(*itV1 == *itV2)

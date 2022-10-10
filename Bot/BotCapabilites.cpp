@@ -13,18 +13,17 @@ void Bot::processCommand( void )
 				cmds = "error";	
 			execute(nick);
 		}
-		// else
-        // 	sendMessage("PRIVMSG", nick, ":Hi, im ircbot. Now I don't know much, but I think that Ilmira will teach me everything");
     }
 	else if (msg.cmd == "PING") {
 		msg.prefix.erase(msg.prefix.begin());
-		sendMessage("PONG", ":" + msg.prefix);
+		sendMessage("PONG", " :" + msg.prefix);
 	}
     else if (msg.cmd == "INVITE") {
 		if (msg.midParams.size() > 2)
-        	sendMessage("JOIN", msg.midParams[1], msg.midParams[2]);
+        	sendMessage("JOIN", " ", msg.midParams[1], " ", msg.midParams[2]);
 		else
-        	sendMessage("JOIN", msg.midParams[1]);
+        	sendMessage("JOIN", " ", msg.midParams[1]);
+		channels.push_back(msg.midParams[1]);
     }
 }
 
@@ -32,7 +31,7 @@ void Bot::processReply( void )
 {
     switch (msg.number) {
         case 331:
-            sendMessage("TOPIC", msg.midParams[1], ":Now this channel under Bot's control!");
+            sendMessage("TOPIC", " ", msg.midParams[1], " :Now this channel under Bot's control!");
             break ;
     }
 }
@@ -68,10 +67,16 @@ void Bot::clearMessage( void )
 
 void Bot::spam( void )
 {
-	if (time(0) - pingTime > 30)
+	// if (time(0) - pingTime > 30)
+	// {
+	// 	pingTime = time(0);
+	// 	std::cout << "What a nice day!\n";
+	// }
+	if (time(0) - pingTime > 120)
 	{
 		pingTime = time(0);
-		std::cout << "What a nice day!\n";
+		for (size_t i = 0; i < channels.size(); i++)
+			sendMessage("PRIVMSG", " ", channels[i], " :Hi, u can ask me about IRC commands. Use '!bot /COMMAND' to more info.");
 	}
 }
 
@@ -105,6 +110,7 @@ void Bot::parseMessage( void )
 void Bot::sendMessage( std::string const & cmd, std::string const & arg1, std::string const & arg2,\
 					   std::string const & arg3, std::string const & arg4, std::string const & arg5)
 {
-	std::string mess = cmd + " " + arg1 + " " + arg2 + " " + arg3 + " " + arg4 + " " + arg5 + "\n";
-	send(srvSock, mess.c_str(), mess.size(), 0);
+	std::string mess = cmd + arg1 + arg2 + arg3 + arg4 + arg5 + "\r\n";
+	int sd = send(srvSock, mess.c_str(), mess.size(), 0);
+	std::cout << cmd << " " << mess.size() << " sended: " << sd << std::endl;
 }

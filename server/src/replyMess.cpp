@@ -128,7 +128,7 @@ int Server::replyMEss(int reply, User &user, const std::string &str) {
 		mess += ":You are now an IRC operator\n";
 		break;
 	case RPL_REHASHING:
-		mess += CONF_NAME + str;
+		mess += CONF_PATH + str;
 		break ;
 	case RPL_TIME:
 		mess += inf.serverName + " :Local time - " + str;
